@@ -1,0 +1,14 @@
+[
+  {
+    "id": 0,
+    "name": "Dog Lover",
+    "isPremium": true,
+    "profilePic": "https://images.pexels.com/photos/28990268/pexels-photo-28990268.jpeg"
+  },
+  {
+    "id": 1,
+    "name": "Cat Lover",
+    "isPremium": false,
+    "profilePic": "https://images.pexels.com/photos/31458663/pexels-photo-31458663.jpeg"
+  }
+]
