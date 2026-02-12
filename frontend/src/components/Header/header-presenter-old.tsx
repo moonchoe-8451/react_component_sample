@@ -53,13 +53,13 @@ export function HeaderPresenter(props: HeaderPresenterProps) {
 
         {/* profile */}
         <button
-          onClick={props.onLogout} // Or onToggleMenu if you have that
+          onClick={props.onDropdown}
           className="cursor-pointer h-full py-1 aspect-square group"
         >
           <div className="h-full aspect-square rounded-full bg-black flex items-center justify-center border-[6px] border-[#1f1f1f] transition-transform overflow-hidden">
-            {props.user?.profilePicture ? (
+            {props.user?.profilePic ? (
               <img
-                src={props.user.profilePicture}
+                src={props.user.profilePic}
                 alt="User"
                 className="h-full w-full object-cover"
               />

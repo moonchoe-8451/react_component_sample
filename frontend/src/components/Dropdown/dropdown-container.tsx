@@ -2,7 +2,7 @@ import { useAuth } from "../../contexts/authContext";
 import DropdownPresenter from "./dropdown-presenter";
 
 export default function DropdownContainer() {
-  const { login, logout } = useAuth();
+  const { user, login, logout } = useAuth();
 
-  return <DropdownPresenter onLogin={login} onLogout={logout} />;
+  return <DropdownPresenter user={user} onLogin={login} onLogout={logout} />;
 }

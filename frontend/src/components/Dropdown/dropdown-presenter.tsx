@@ -3,19 +3,23 @@ import type { DropdownPresenterProps } from "../../types/types";
 export default function DropdownPresenter(props: DropdownPresenterProps) {
   return (
     /* Solid light gray background */
-    <div className="absolute right-0 top-full mt-2 w-56 bg-gray-200 text-black shadow-xl rounded-lg py-2 z-50 border border-gray-400">
+    <div className="absolute -right-2 top-full mt-2 w-56 bg-black text-white shadow-xl rounded-lg py-2 z-50">
       <ul className="flex flex-col text-sm font-medium">
         <li
           onClick={() => props.onLogin(true)}
-          className="px-4 py-3 hover:bg-gray-300 cursor-pointer border-b border-gray-300"
+          className="px-4 py-3 hover:bg-gray-300 cursor-pointer"
         >
-          Login: Premium User
+          {props.user?.isPremium
+            ? `Logged In: ${props.user.name} (Premium)`
+            : "Login (Premium)"}
         </li>
         <li
           onClick={() => props.onLogin(false)}
           className="px-4 py-3 hover:bg-gray-300 cursor-pointer"
         >
-          Login: Non-Premium User
+          {props.user && !props.user.isPremium
+            ? `Logged In: ${props.user.name} (Standard)`
+            : "Login (Standard)"}
         </li>
         <li
           onClick={props.onLogout}

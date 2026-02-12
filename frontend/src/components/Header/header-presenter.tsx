@@ -51,19 +51,28 @@ export function HeaderPresenter(props: HeaderPresenterProps) {
           <button className="flex items-center justify-center rounded-full h-3/5 aspect-square cursor-pointer ">
             <HiOutlineUserGroup size={24} />
           </button>
-          <div className="relative h-4/5 aspect-square">
-            <button
-              onClick={props.onDropdown}
-              className="flex items-center justify-center w-full h-full rounded-full cursor-pointer border-[6px] border-gray-800"
-            >
-              <img
-                src="https://images.pexels.com/photos/28990268/pexels-photo-28990268.jpeg"
-                className="h-full w-full object-cover rounded-full"
-              />
-            </button>
+          <div className="h-full flex items-center justify-center">
+            {/* 1. This wrapper maintains the 4/5 height and forces a 1:1 ratio */}
+            <div className="relative h-4/5 aspect-square">
+              <button
+                onClick={props.onDropdown}
+                /* 2. overflow-hidden prevents the image from leaking outside the circle */
+                className="flex items-center justify-center w-full h-full rounded-full cursor-pointer border-[6px] border-gray-800 overflow-hidden"
+              >
+                <img
+                  src={
+                    props.user?.profilePic ||
+                    "https://ui-avatars.com/api/?name=Guest"
+                  }
+                  alt={props.user?.name || "Guest"}
+                  /* 3. w-full h-full + object-cover makes the image fill the circle perfectly */
+                  className="w-full h-full object-cover"
+                />
+              </button>
 
-            {/* Render the Dropdown here */}
-            {props.dropdown && <DropdownContainer />}
+              {/* Dropdown stays relative to the square container */}
+              {props.dropdown && <DropdownContainer />}
+            </div>
           </div>
         </div>
       </div>

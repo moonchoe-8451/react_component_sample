@@ -1,24 +1,22 @@
+import type * as React from "react";
+
 export interface User {
   id: number;
   name: string;
   isPremium: boolean;
-  profilePicture: string;
+  profilePic: string;
 }
 
 export interface AuthContextType {
-  user: User;
+  user: User | null;
   isLoading: boolean;
-  login: (isPremium: boolean) => void;
+  login: (isPremium: boolean) => void | Promise<void>;
   logout: () => void;
 }
 
 export interface HeaderPresenterProps {
   user: User | null | undefined;
-  isLoading: boolean;
-  onLogin: (isPremium: boolean) => void;
-  onLogout: () => void;
   onChat: () => void;
-  isChatOpen: boolean;
   dropdown: boolean;
   onDropdown: () => void;
 }
@@ -28,9 +26,11 @@ export interface IndexPresenterProps {
 }
 
 export interface ChatPresenterProps {
+  messages: Message[];
   message: string;
   onInputChange: (value: string) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onSend: () => void;
 }
 
 export interface Message {
@@ -48,11 +48,8 @@ export interface ChatContextType {
   clearChat: () => void;
 }
 
-// export interface DropdownContainerProps {
-//   onClose: () => void;
-// }
-
 export interface DropdownPresenterProps {
-  onLogin: (isPremium: boolean) => void;
+  onLogin: (isPremium: boolean) => void | Promise<void>;
   onLogout: () => void;
+  user: User | null;
 }
