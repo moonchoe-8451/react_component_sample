@@ -38,13 +38,29 @@ export interface Message {
   text: string;
   sender: "user" | "ai";
   timestamp: Date;
+
+  // Optional structured payload for hardcoded AI recommendations
+  header?: string;
+  songTitle?: string;
+  songArtist?: string;
+  songCover?: string;
+  footer?: string;
 }
 
 export interface ChatContextType {
   isChatOpen: boolean;
   setIsChatOpen: (open: boolean) => void;
   messages: Message[];
-  addMessage: (text: string, sender: "user" | "ai") => void;
+  addMessage: (
+    text: string,
+    sender: "user" | "ai",
+    meta?: Partial<
+      Pick<
+        Message,
+        "header" | "songTitle" | "songArtist" | "songCover" | "footer"
+      >
+    >,
+  ) => void;
   clearChat: () => void;
 }
 

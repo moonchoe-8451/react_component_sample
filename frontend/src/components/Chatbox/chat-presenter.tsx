@@ -1,4 +1,5 @@
 import type { ChatPresenterProps } from "../../types/types";
+import { ChatMessage } from "../chatMessage";
 
 export default function ChatPresenter(props: ChatPresenterProps) {
   const canSend = props.message.trim().length > 0;
@@ -14,6 +15,8 @@ export default function ChatPresenter(props: ChatPresenterProps) {
           <div className="p-2 space-y-2">
             {props.messages.map((m) => {
               const isUser = m.sender === "user";
+              const hasRec =
+                !!m.songTitle || !!m.songArtist || !!m.songCover || !!m.footer;
               return (
                 <div
                   key={m.id}
@@ -30,7 +33,59 @@ export default function ChatPresenter(props: ChatPresenterProps) {
                     <div className="text-[11px] opacity-70 mb-1">
                       {isUser ? "You" : "AI"}
                     </div>
+
+                    {/* Text content */}
                     {m.text}
+
+                    {/* Structured recommendation content (AI only) */}
+                    {!isUser && hasRec && (
+                      <div className="mt-3">
+                        <ChatMessage.Root
+                          variant="assistant"
+                          className="max-w-full border-white/10 bg-[#161616] text-white mb-0"
+                        >
+                          {(m.header || m.songTitle || m.songArtist) && (
+                            <ChatMessage.Header>
+                              {m.header || "Recommendation"}
+                            </ChatMessage.Header>
+                          )}
+
+                          <ChatMessage.Body>
+                            {(m.songTitle || m.songArtist) && (
+                              <>
+                                {m.songTitle && (
+                                  <ChatMessage.Title>
+                                    {m.songTitle}
+                                  </ChatMessage.Title>
+                                )}
+                                {m.songArtist && (
+                                  <ChatMessage.Artist>
+                                    {m.songArtist}
+                                  </ChatMessage.Artist>
+                                )}
+                              </>
+                            )}
+
+                            {m.songCover && (
+                              <div className="flex justify-center">
+                                <ChatMessage.Cover
+                                  src={m.songCover}
+                                  alt={m.songTitle || "Recommended song cover"}
+                                />
+                              </div>
+                            )}
+                          </ChatMessage.Body>
+
+                          {m.footer && (
+                            <ChatMessage.Footer>
+                              <span className="text-sm opacity-80 whitespace-pre-wrap text-white/80">
+                                {m.footer}
+                              </span>
+                            </ChatMessage.Footer>
+                          )}
+                        </ChatMessage.Root>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

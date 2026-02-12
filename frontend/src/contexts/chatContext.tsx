@@ -13,12 +13,22 @@ export default function ChatProvider({
   const [messages, setMessages] = useState<Message[]>([]);
 
   // Function to handle adding new messages to the history
-  function addMessage(text: string, sender: "user" | "ai") {
+  function addMessage(
+    text: string,
+    sender: "user" | "ai",
+    meta?: Partial<
+      Pick<
+        Message,
+        "header" | "songTitle" | "songArtist" | "songCover" | "footer"
+      >
+    >,
+  ) {
     const newMessage: Message = {
       id: crypto.randomUUID(), // Generates a unique ID
       text,
       sender,
       timestamp: new Date(),
+      ...meta,
     };
     setMessages((prev) => [...prev, newMessage]);
   }

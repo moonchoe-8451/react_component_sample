@@ -94,16 +94,38 @@ export default function ChatContainer() {
     const trimmed = message.trim();
     if (!trimmed) return;
 
+    // AI recommendations are premium-only
+    if (!user?.isPremium) {
+      addMessage("You must purchase premium to use the AI agent.", "ai");
+      setMessage("");
+      return;
+    }
+
     addMessage(trimmed, "user");
     setMessage("");
 
     // AI reply is hardcoded from recs.json (no model calls)
     const rec = pickRecommendation(user, recs, sendCountRef.current);
-    const aiText = rec
-      ? formatRecommendation(rec)
-      : recsError
-        ? `AI is unavailable: ${recsError}`
-        : "AI is unavailable: no recommendations loaded.";
+    if (rec) {
+      const aiText = formatRecommendation(rec);
+      sendCountRef.current += 1;
+      window.setTimeout(
+        () =>
+          addMessage(aiText, "ai", {
+            header: rec.header,
+            songTitle: rec.songTitle,
+            songArtist: rec.songArtist,
+            songCover: rec.songCover,
+            footer: rec.footer,
+          }),
+        250,
+      );
+      return;
+    }
+
+    const aiText = recsError
+      ? `AI is unavailable: ${recsError}`
+      : "AI is unavailable: no recommendations loaded.";
 
     sendCountRef.current += 1;
     window.setTimeout(() => addMessage(aiText, "ai"), 250);
