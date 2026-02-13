@@ -6,7 +6,9 @@ import { GoHome } from "react-icons/go";
 import { IoSearchOutline } from "react-icons/io5";
 import { PiOpenAiLogoLight } from "react-icons/pi";
 import DropdownContainer from "../Dropdown/dropdown-container";
-
+// object array mapped to reduce divs
+// functions in UI
+//
 export function HeaderPresenter(props: HeaderPresenterProps) {
   return (
     <header className="flex justify-between items-center p-2 h-full bg-black">
